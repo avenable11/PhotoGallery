@@ -66,4 +66,8 @@ public class RSSFeed {
         return items;
     }
 
+    public void clearFeed() {
+        items.clear();
+    }
+
 }

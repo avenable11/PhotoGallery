@@ -21,7 +21,7 @@ public class PhotoFileWorker extends Worker {
     @Override
     public Result doWork() {
         PhotoGalleryApp app = (PhotoGalleryApp)getApplicationContext();
-        FileIO.getFileIO(app).readFile();
+        FileIO.getFileIO(app).readFile(true);
         RSSFeed feed = RSSFeed.get();
 
         if(app.getFeedMillis() == feed.getPubDateMillis()) {

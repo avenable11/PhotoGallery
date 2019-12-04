@@ -94,13 +94,14 @@ public class FileIO {
 
 
     }
-    public RSSFeed readFile() {
+    public RSSFeed readFile(boolean onlyReadDate) {
         try {
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser parser = factory.newSAXParser();
             XMLReader xmlreader = parser.getXMLReader();
 
             RSSFeedHandler theRssHandler = new RSSFeedHandler();
+            theRssHandler.setOnlyReadDate(onlyReadDate);
             xmlreader.setContentHandler(theRssHandler);
 
             FileInputStream in = context.openFileInput(FILENAME);

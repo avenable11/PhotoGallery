@@ -16,12 +16,20 @@ public class RSSFeedHandler extends DefaultHandler {
     private boolean isDescription = false;
     private boolean isLink = false;
     private boolean isPubDate = false;
+    private boolean onlyReadDate = false;
 
     public RSSFeed getFeed() {
         return feed;
     }
+
+    public void setOnlyReadDate(boolean readDate) {
+        onlyReadDate = readDate;
+    }
     public void startDocument() throws SAXException {
         feed = RSSFeed.get();
+        if (!onlyReadDate) {
+            feed.clearFeed();
+        }
         item = new GalleryItem();
     }
 
@@ -89,6 +97,10 @@ public class RSSFeedHandler extends DefaultHandler {
             if(!feedPubDateHasBeenRead) {
                 feed.setPubDate(s);
                 feedPubDateHasBeenRead = true;
+                if (onlyReadDate) {
+                    isPubDate = false;
+                    return;
+                }
             }
             else {
                // item.setPubDate(s);

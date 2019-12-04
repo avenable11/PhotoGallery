@@ -205,8 +205,13 @@ public class PhotoGalleryFragment extends Fragment {
         @Override
         protected void onPostExecute(List<GalleryItem> items) {
             if (items == null) {
-                FileIO.getFileIO(getActivity().getApplication()).readFile();
-                mItems = RSSFeed.get().getAllItems();
+                PhotoGalleryApp app = (PhotoGalleryApp)getActivity().getApplication();
+                RSSFeed feed = RSSFeed.get();
+                FileIO.getFileIO(getActivity().getApplication()).readFile(false);
+                if(app.getFeedMillis() != feed.getPubDateMillis()) {
+                    app.setFeedMillis(feed.getPubDateMillis());
+                }
+                mItems = feed.get().getAllItems();
             } else {
                 mItems = items;
             }
